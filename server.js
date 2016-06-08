@@ -1,16 +1,19 @@
 const express = require('express')
+const path = require('path');
 const posts = require('./posts');
 
 const app = express()
 
+app.use(express.static(path.join(__dirname, 'public')))
+
 app.get('/api/post/:id?', (req, res) => {
   const id = req.params.id
   if (!id) {
-    res.send(posts)
+    res.json(posts)
   } else {
     const post = posts.find(p => p.id == id);
     if (post)
-      res.send(post)
+      res.json(post)
     else
       res.status(404).send('Not Found')
   }
