@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 const allPostsUrl = '/api/post'
 
@@ -28,7 +29,13 @@ class App extends React.Component {
 
   render() {
     const posts = this.state.posts.map((post) => {
-      return <li key={post.id}>{post.title}</li>
+      const linkTo = `/${post.id}/${post.slug}`;
+
+      return (
+        <li key={post.id}>
+          <Link to={linkTo}>{post.title}</Link>
+        </li>
+      )
     })
 
     return (
@@ -37,6 +44,8 @@ class App extends React.Component {
         <ul>
           {posts}
         </ul>
+
+        {this.props.children}
       </div>
     )
   }
