@@ -31,7 +31,15 @@ app.get('*', (req, res) => {
     } else if (redirect) {
       res.redirect(redirect.pathname + redirect.search)
     } else if (props) {
-      const appHtml = renderToString(<RouterContext {...props} />)
+      const routerContextWithData = (
+        <RouterContext 
+          {...props}
+          createElement={(Component, props) => {
+            return <Component posts={posts} {...props} />
+          }}
+        />
+      )
+      const appHtml = renderToString(routerContextWithData)
       res.send(renderPage(appHtml))
     } else {
       res.status(404).send('Not Found')
@@ -57,5 +65,5 @@ function renderPage(appHtml) {
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, function() {
-  console.log('Express running at localhost: ' + PORT)
+  console.log('Express running at localhost:' + PORT)
 })

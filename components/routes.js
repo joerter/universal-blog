@@ -1,10 +1,12 @@
 import React from 'react'
-import { Route } from 'react-router'
+import { Route, IndexRoute } from 'react-router'
 import App from './App'
+import Home from './Home'
 import Post from './Post'
 
 module.exports = (
   <Route path="/" component={App}>
+    <IndexRoute component={Home} />
     <Route path="/:postId/:postName" />
   </Route>
 )

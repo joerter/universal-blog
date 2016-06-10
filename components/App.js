@@ -1,6 +1,6 @@
 import React from 'react'
 import Post from './Post'
-import { Link } from 'react-router'
+import { Link, IndexLink } from 'react-router'
 
 const allPostsUrl = '/api/post'
 
@@ -8,7 +8,7 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      posts: []
+      posts: props.posts || []
     }
   }
 
@@ -49,6 +49,7 @@ class App extends React.Component {
 
     return (
       <div>
+        <IndexLink to="/">Home</IndexLink>
         <h3>Posts</h3>
         <ul>
           {posts}
@@ -57,7 +58,7 @@ class App extends React.Component {
         {postTitle && postContent ? (
           <Post title={postTitle} content={postContent} />
         ) : (
-          <h1>Welcome to the Universal Blog!</h1>
+          this.props.children
         )}
       </div>
     )

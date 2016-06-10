@@ -46,6 +46,8 @@
 
 	/* WEBPACK VAR INJECTION */(function(__dirname) {'use strict';
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -60,9 +62,9 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var express = __webpack_require__(7);
-	var path = __webpack_require__(8);
-	var posts = __webpack_require__(9);
+	var express = __webpack_require__(8);
+	var path = __webpack_require__(9);
+	var posts = __webpack_require__(10);
 
 	var app = express();
 
@@ -87,7 +89,12 @@
 	    } else if (redirect) {
 	      res.redirect(redirect.pathname + redirect.search);
 	    } else if (props) {
-	      var appHtml = (0, _server.renderToString)(_react2.default.createElement(_reactRouter.RouterContext, props));
+	      var routerContextWithData = _react2.default.createElement(_reactRouter.RouterContext, _extends({}, props, {
+	        createElement: function createElement(Component, props) {
+	          return _react2.default.createElement(Component, _extends({ posts: posts }, props));
+	        }
+	      }));
+	      var appHtml = (0, _server.renderToString)(routerContextWithData);
 	      res.send(renderPage(appHtml));
 	    } else {
 	      res.status(404).send('Not Found');
@@ -139,6 +146,10 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
+	var _Home = __webpack_require__(7);
+
+	var _Home2 = _interopRequireDefault(_Home);
+
 	var _Post = __webpack_require__(6);
 
 	var _Post2 = _interopRequireDefault(_Post);
@@ -148,6 +159,7 @@
 	module.exports = _react2.default.createElement(
 	  _reactRouter.Route,
 	  { path: '/', component: _App2.default },
+	  _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: '/:postId/:postName' })
 	);
 
@@ -192,7 +204,7 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
 
 	    _this.state = {
-	      posts: []
+	      posts: props.posts || []
 	    };
 	    return _this;
 	  }
@@ -251,6 +263,11 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(
+	          _reactRouter.IndexLink,
+	          { to: '/' },
+	          'Home'
+	        ),
+	        _react2.default.createElement(
 	          'h3',
 	          null,
 	          'Posts'
@@ -260,11 +277,7 @@
 	          null,
 	          posts
 	        ),
-	        postTitle && postContent ? _react2.default.createElement(_Post2.default, { title: postTitle, content: postContent }) : _react2.default.createElement(
-	          'h1',
-	          null,
-	          'Welcome to the Universal Blog!'
-	        )
+	        postTitle && postContent ? _react2.default.createElement(_Post2.default, { title: postTitle, content: postContent }) : this.props.children
 	      );
 	    }
 	  }]);
@@ -316,18 +329,56 @@
 
 /***/ },
 /* 7 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = require("express");
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Home = function Home() {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    ' ',
+	    _react2.default.createElement(
+	      'h1',
+	      null,
+	      'Welcome to the Universal Blog!'
+	    ),
+	    ' ',
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      'Check out the latest posts!'
+	    ),
+	    ' '
+	  );
+	};
+
+	exports.default = Home;
 
 /***/ },
 /* 8 */
 /***/ function(module, exports) {
 
-	module.exports = require("path");
+	module.exports = require("express");
 
 /***/ },
 /* 9 */
+/***/ function(module, exports) {
+
+	module.exports = require("path");
+
+/***/ },
+/* 10 */
 /***/ function(module, exports) {
 
 	'use strict';

@@ -25857,6 +25857,10 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
+	var _Home = __webpack_require__(232);
+
+	var _Home2 = _interopRequireDefault(_Home);
+
 	var _Post = __webpack_require__(231);
 
 	var _Post2 = _interopRequireDefault(_Post);
@@ -25866,6 +25870,7 @@
 	module.exports = _react2.default.createElement(
 	  _reactRouter.Route,
 	  { path: '/', component: _App2.default },
+	  _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: '/:postId/:postName' })
 	);
 
@@ -25910,7 +25915,7 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
 
 	    _this.state = {
-	      posts: []
+	      posts: props.posts || []
 	    };
 	    return _this;
 	  }
@@ -25969,6 +25974,11 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(
+	          _reactRouter.IndexLink,
+	          { to: '/' },
+	          'Home'
+	        ),
+	        _react2.default.createElement(
 	          'h3',
 	          null,
 	          'Posts'
@@ -25978,11 +25988,7 @@
 	          null,
 	          posts
 	        ),
-	        postTitle && postContent ? _react2.default.createElement(_Post2.default, { title: postTitle, content: postContent }) : _react2.default.createElement(
-	          'h1',
-	          null,
-	          'Welcome to the Universal Blog!'
-	        )
+	        postTitle && postContent ? _react2.default.createElement(_Post2.default, { title: postTitle, content: postContent }) : this.props.children
 	      );
 	    }
 	  }]);
@@ -26031,6 +26037,44 @@
 	};
 
 	exports.default = Post;
+
+/***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Home = function Home() {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    ' ',
+	    _react2.default.createElement(
+	      'h1',
+	      null,
+	      'Welcome to the Universal Blog!'
+	    ),
+	    ' ',
+	    _react2.default.createElement(
+	      'p',
+	      null,
+	      'Check out the latest posts!'
+	    ),
+	    ' '
+	  );
+	};
+
+	exports.default = Home;
 
 /***/ }
 /******/ ]);
