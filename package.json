@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "build:client": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:server": "webpack --config webpack.server.config.js",
+    "build": "npm run build:client && npm run build:server",
+    "start": "npm run build && node server.bundle.js"
   },
   "author": "",
   "license": "MIT",

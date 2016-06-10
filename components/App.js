@@ -5,6 +5,7 @@ const allPostsUrl = '/api/post'
 
 class App extends React.Component {
   constructor(props) {
+    console.log(props);
     super(props)
     this.state = {
       posts: []
