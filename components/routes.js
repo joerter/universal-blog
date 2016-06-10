@@ -5,6 +5,6 @@ import Post from './Post'
 
 module.exports = (
   <Route path="/" component={App}>
-    <Route path="/:postId/:postName" component={Post} />
+    <Route path="/:postId/:postName" />
   </Route>
 )

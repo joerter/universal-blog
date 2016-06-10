@@ -1,11 +1,11 @@
 import React from 'react'
+import Post from './Post'
 import { Link } from 'react-router'
 
 const allPostsUrl = '/api/post'
 
 class App extends React.Component {
   constructor(props) {
-    console.log(props);
     super(props)
     this.state = {
       posts: []
@@ -15,7 +15,7 @@ class App extends React.Component {
   componentDidMount() {
     const request = new XMLHttpRequest()
     request.open('GET', allPostsUrl, true)
-    request.setRequestHeader('Content-type', 'application/json');
+    request.setRequestHeader('Content-type', 'application/json')
 
     request.onload = () => {
       if (request.status === 200) {
@@ -25,7 +25,7 @@ class App extends React.Component {
       }
     }
 
-    request.send();
+    request.send()
   }
 
   render() {
@@ -39,6 +39,14 @@ class App extends React.Component {
       )
     })
 
+    const { postId, postName } = this.props.params;
+    let postTitle, postContent
+    if (postId && postName) {
+      const post = this.state.posts.find(p => p.id == postId)
+      postTitle = post.title
+      postContent = post.content
+    }
+
     return (
       <div>
         <h3>Posts</h3>
@@ -46,7 +54,11 @@ class App extends React.Component {
           {posts}
         </ul>
 
-        {this.props.children}
+        {postTitle && postContent ? (
+          <Post title={postTitle} content={postContent} />
+        ) : (
+          <h1>Welcome to the Universal Blog!</h1>
+        )}
       </div>
     )
   }
